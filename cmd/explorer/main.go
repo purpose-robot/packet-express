@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"slices"
 	"strings"
+	"time"
 
 	"github.com/scrapli/scrapligo/driver/options"
 	"github.com/scrapli/scrapligo/logging"
@@ -132,6 +133,8 @@ func fetchDataFromDevice(logger *logging.Instance, location, mgmtAddr, username,
 		options.WithAuthPassword(password),
 		options.WithAuthNoStrictKey(),
 		options.WithTransportType("standard"),
+		options.WithTimeoutOps(10*time.Second),
+		options.WithTimeoutSocket(10*time.Second),
 	)
 	if err != nil {
 		return nil, fmt.Errorf("failed to initiate scrapli cli client; %w", err)
