@@ -3,6 +3,7 @@ module github.com/purpose-robot/neighbor-explorer
 go 1.26.1
 
 require (
+	github.com/jaswdr/faker/v2 v2.9.1
 	github.com/scrapli/scrapligo v1.4.0
 	github.com/sirikothe/gotextfsm v1.1.0
 	golang.org/x/term v0.44.0
