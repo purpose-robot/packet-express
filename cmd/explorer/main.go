@@ -171,8 +171,8 @@ func fetchDataFromDevice(logger *logging.Instance, location, mgmtAddr, username,
 	var output strings.Builder
 
 	for _, response := range responses.Responses {
-		output.WriteString(response.Result)
-		output.WriteString("\n--------------------------------------------------------------------------------------\n")
+		output.WriteString(response.Input + "\n\n")
+		output.WriteString(response.Result + "\n\n")
 	}
 
 	if err := os.WriteFile(filename, []byte(output.String()), 0644); err != nil {
