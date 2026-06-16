@@ -152,7 +152,7 @@ func fetchDataFromDevice(logger *logging.Instance, location, mgmtAddr, username,
 		return nil, fmt.Errorf("failed to fetch configuration from network device %s; %w", mgmtAddr, err)
 	}
 	if responses.Failed != nil {
-		return nil, fmt.Errorf("failed to send one or more commands to %s; %w", mgmtAddr, responses.Failed)
+		logger.Infof("failed to fetch some output from network device; %v", responses.Failed)
 	}
 
 	version, err := parsing.Template("cisco_ios_show_version.textfsm", responses.JoinedResult())
