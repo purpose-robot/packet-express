@@ -1,0 +1,3 @@
+show switch
+show version
+show cdp neighbors detail
