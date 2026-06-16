@@ -1,0 +1,113 @@
+{
+  "hamburg": {
+    "devices": [
+      {
+        "platform": "C9500-48Y4C",
+        "hostname": "DE-HAM-CORE",
+        "ip_address": "172.24.100.10",
+        "stack_members": [
+          {
+            "id": 1,
+            "role": "active",
+            "serial_number": "FJC2194A948",
+            "software_version": "17.12.09"
+          },
+          {
+            "id": 2,
+            "role": "standby",
+            "serial_number": "FCW22001FF4",
+            "software_version": "17.12.09"
+          }
+        ]
+      },
+      {
+        "platform": "C9200-48P",
+        "hostname": "DE-HAM-ACC-SW01",
+        "ip_address": "172.24.100.11",
+        "serial_number": "FCW2301AA04",
+        "software_version": "17.09.12"
+      },
+      {
+        "platform": "C9200-48P",
+        "hostname": "DE-HAM-ACC-SW02",
+        "ip_address": "172.24.100.12",
+        "serial_number": "FOC2215AB02",
+        "software_version": "17.09.12"
+      }
+    ],
+    "neighbors": [
+      {
+        "local_hostname": "DE-HAM-CORE",
+        "local_interface": "TwentyFiveGigE1/0/1",
+        "local_ip_address": "172.24.100.10",
+        "remote_platform": "cisco C9200-48P",
+        "remote_hostname": "DE-HAM-ACC-SW01",
+        "remote_interface": "TwentyFiveGigE1/1/1",
+        "remote_ip_address": "172.24.100.11"
+      },
+      {
+        "local_hostname": "DE-HAM-CORE",
+        "local_interface": "TwentyFiveGigE2/0/1",
+        "local_ip_address": "172.24.100.10",
+        "remote_platform": "cisco C9200-48P",
+        "remote_hostname": "DE-HAM-ACC-SW01",
+        "remote_interface": "TwentyFiveGigE1/1/2",
+        "remote_ip_address": "172.24.100.11"
+      },
+      {
+        "local_hostname": "DE-HAM-ACC-SW01",
+        "local_interface": "TwentyFiveGigE1/1/1",
+        "local_ip_address": "172.24.100.11",
+        "remote_platform": "cisco C9200-48P",
+        "remote_hostname": "DE-HAM-CORE",
+        "remote_interface": "TwentyFiveGigE1/0/1",
+        "remote_ip_address": "172.24.100.10"
+      },
+      {
+        "local_hostname": "DE-HAM-ACC-SW01",
+        "local_interface": "TwentyFiveGigE1/1/2",
+        "local_ip_address": "172.24.100.11",
+        "remote_platform": "cisco C9200-48P",
+        "remote_hostname": "DE-HAM-CORE",
+        "remote_interface": "TwentyFiveGigE2/0/1",
+        "remote_ip_address": "172.24.100.10"
+      },
+      {
+        "local_hostname": "DE-HAM-CORE",
+        "local_interface": "TwentyFiveGigE1/0/2",
+        "local_ip_address": "172.24.100.10",
+        "remote_platform": "cisco C9200-48P",
+        "remote_hostname": "DE-HAM-ACC-SW02",
+        "remote_interface": "TwentyFiveGigE1/1/1",
+        "remote_ip_address": "172.24.100.12"
+      },
+      {
+        "local_hostname": "DE-HAM-CORE",
+        "local_interface": "TwentyFiveGigE2/0/2",
+        "local_ip_address": "172.24.100.10",
+        "remote_platform": "cisco C9200-48P",
+        "remote_hostname": "DE-HAM-ACC-SW02",
+        "remote_interface": "TwentyFiveGigE1/1/2",
+        "remote_ip_address": "172.24.100.12"
+      },
+      {
+        "local_hostname": "DE-HAM-ACC-SW02",
+        "local_interface": "TwentyFiveGigE1/1/1",
+        "local_ip_address": "172.24.100.12",
+        "remote_platform": "cisco C9200-48P",
+        "remote_hostname": "DE-HAM-CORE",
+        "remote_interface": "TwentyFiveGigE1/0/2",
+        "remote_ip_address": "172.24.100.10"
+      },
+      {
+        "local_hostname": "DE-HAM-ACC-SW02",
+        "local_interface": "TwentyFiveGigE1/1/2",
+        "local_ip_address": "172.24.100.12",
+        "remote_platform": "cisco C9200-48P",
+        "remote_hostname": "DE-HAM-CORE",
+        "remote_interface": "TwentyFiveGigE2/0/2",
+        "remote_ip_address": "172.24.100.10"
+      }
+    ]
+  }
+}
