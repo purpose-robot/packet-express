@@ -168,7 +168,14 @@ func fetchDataFromDevice(logger *logging.Instance, location, mgmtAddr, username,
 
 	filename := filepath.Join("output", strings.ToLower(location+"_"+hostname+".txt"))
 
-	if err := os.WriteFile(filename, []byte(responses.JoinedResult()), 0644); err != nil {
+	var output strings.Builder
+
+	for _, response := range responses.Responses {
+		output.WriteString(response.Result)
+		output.WriteString("\n--------------------------------------------------------------------------------------\n")
+	}
+
+	if err := os.WriteFile(filename, []byte(output.String()), 0644); err != nil {
 		return nil, fmt.Errorf("failed to write scrapli response to %s; %w", filename, err)
 	}
 
