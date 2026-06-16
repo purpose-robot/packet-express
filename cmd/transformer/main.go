@@ -157,7 +157,7 @@ func main() {
 
 		for _, neighbor := range neighbors {
 			if neighbor.RemoteHostname != "" && neighbor.RemoteIPAddress != "" {
-				ipByHostname[neighbor.RemoteHostname] = neighbor.RemoteIPAddress
+				ipByHostname[hostKey(neighbor.RemoteHostname)] = neighbor.RemoteIPAddress
 			}
 		}
 	}
@@ -167,12 +167,12 @@ func main() {
 	for _, lv := range view {
 		for i := range lv.Devices {
 			if lv.Devices[i].IPAddress == "" {
-				lv.Devices[i].IPAddress = ipByHostname[lv.Devices[i].Hostname]
+				lv.Devices[i].IPAddress = ipByHostname[hostKey(lv.Devices[i].Hostname)]
 			}
 		}
 		for i := range lv.Neighbors {
 			if lv.Neighbors[i].LocalIPAddress == "" {
-				lv.Neighbors[i].LocalIPAddress = ipByHostname[lv.Neighbors[i].LocalHostname]
+				lv.Neighbors[i].LocalIPAddress = ipByHostname[hostKey(lv.Neighbors[i].LocalHostname)]
 			}
 		}
 	}
@@ -187,6 +187,21 @@ func main() {
 	}
 
 	log.Printf("wrote %d location(s) to %s", len(view), *outputFile)
+}
+
+// shortName drops the DNS domain from a hostname, e.g.
+// "DE-HAM-CORE.corp.example.com" becomes "DE-HAM-CORE". Case is preserved so
+// the device's own naming is kept for display.
+func shortName(name string) string {
+	short, _, _ := strings.Cut(name, ".")
+	return short
+}
+
+// hostKey normalises a hostname for cross-referencing. CDP may advertise a
+// fully-qualified name while "show version" reports only the short hostname,
+// so folding the short name to lower case lets both sides join.
+func hostKey(name string) string {
+	return strings.ToLower(shortName(name))
 }
 
 // locationFromName recovers the location prefix from a "<location>_<hostname>.txt"
@@ -222,7 +237,7 @@ func parseDevice(content string) (Device, []Neighbor, error) {
 			LocalHostname:   device.Hostname,
 			LocalInterface:  strVal(entry, "LOCAL_INTERFACE"),
 			RemotePlatform:  strVal(entry, "PLATFORM"),
-			RemoteHostname:  strVal(entry, "NEIGHBOR_NAME"),
+			RemoteHostname:  shortName(strVal(entry, "NEIGHBOR_NAME")),
 			RemoteInterface: strVal(entry, "NEIGHBOR_INTERFACE"),
 			RemoteIPAddress: strVal(entry, "MGMT_ADDRESS"),
 		})
@@ -244,7 +259,7 @@ func buildDevice(versions, switches []map[string]any) Device {
 
 	record := versions[0]
 
-	device.Hostname = strVal(record, "HOSTNAME")
+	device.Hostname = shortName(strVal(record, "HOSTNAME"))
 	device.Platform = strVal(record, "HARDWARE")
 
 	version := strVal(record, "VERSION")
