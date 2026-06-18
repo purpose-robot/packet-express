@@ -1,3 +1,7 @@
+// Neighbor Explorer — app entry (bundled by Bun)
+// Cytoscape + fcose come from npm now (instead of CDN globals).
+// Lucide is provided by the inline shim in index.html (window.lucide);
+// Open Props tokens are inlined in the <style> block.
 import cytoscape from "cytoscape";
 import fcose from "cytoscape-fcose";
 
@@ -432,18 +436,18 @@ cytoscape.use(fcose);
             width: "data(size)",
             height: "data(size)",
             "border-width": 2,
-            "border-color": "#0a1019",
+            "border-color": "#101219" /* wa gray-05 */,
             label: "data(label)",
-            color: "#c4d2df",
+            color: "#e4e5e9" /* wa gray-90 */,
             "font-family": "ui-monospace,Menlo,monospace",
             "font-size": 9,
             "font-weight": 500,
             "text-valign": "bottom",
             "text-halign": "center",
             "text-margin-y": 5,
-            "text-outline-color": "#070b11",
+            "text-outline-color": "#101219" /* wa gray-05 */,
             "text-outline-width": 2.4,
-            "text-background-color": "#070b11",
+            "text-background-color": "#101219" /* wa gray-05 */,
             "text-background-opacity": 0.75,
             "text-background-padding": "2px",
             "text-background-shape": "roundrectangle",
@@ -460,9 +464,9 @@ cytoscape.use(fcose);
             label: "data(label)",
             "font-size": 11,
             "font-weight": 700,
-            color: "#e6edf3",
+            color: "#f1f2f3" /* wa gray-95 */,
             "border-width": 3,
-            "border-color": "#0a1019",
+            "border-color": "#101219" /* wa gray-05 */,
             "text-margin-y": 7,
           },
         },
@@ -471,7 +475,7 @@ cytoscape.use(fcose);
           style: {
             "font-size": 10,
             "font-weight": 600,
-            color: "#c7d2fe",
+            color: "#9da9ff" /* wa indigo-70 */,
             "text-margin-y": 6,
           },
         },
@@ -485,7 +489,7 @@ cytoscape.use(fcose);
           selector: "edge",
           style: {
             width: 1,
-            "line-color": "#6366f1",
+            "line-color": "#545868" /* wa gray-40 (themed via --cy-edge) */,
             opacity: 0.6,
             "curve-style": "bezier",
             "control-point-step-size": 18,
@@ -497,7 +501,7 @@ cytoscape.use(fcose);
           selector: ".bb-hi",
           style: {
             width: 2.2,
-            "line-color": "#808aff",
+            "line-color": "#808aff" /* wa indigo-60 */,
             opacity: 0.85,
           },
         },
@@ -529,7 +533,7 @@ cytoscape.use(fcose);
         {
           selector: "node.nbr",
           style: {
-            "border-color": "#9da9ff",
+            "border-color": "#9da9ff" /* wa indigo-70 */,
             "border-width": 2.4,
             "text-opacity": 1,
             "z-index": 50,
@@ -538,7 +542,7 @@ cytoscape.use(fcose);
         {
           selector: "edge.hi",
           style: {
-            "line-color": "#9da9ff",
+            "line-color": "#9da9ff" /* wa indigo-70 */,
             opacity: 0.95,
             width: 2.6,
             "z-index": 90,
@@ -613,31 +617,30 @@ cytoscape.use(fcose);
         nodeDimensionsIncludeLabels: true,
       },
     };
-    var curLayout = "fcose";
-    function runLayout(name) {
-      if (!LAYOUTS[name]) name = "fcose"; // ignore unknown/stale layout names
+    var curLayout = "breadthfirst";
+    function runLayout(name, animate = true) {
+      if (!LAYOUTS[name]) name = "breadthfirst"; // tree is the default layout
       curLayout = name;
-      $("st-lay").textContent = name === "fcose" ? "Force" : "Tree";
       var vis = cy.nodes(":visible");
       var lo = (vis.length ? vis : cy.nodes()).union(cy.edges(":visible"));
+      // breadthfirst's output depends on the nodes' starting positions. After a
+      // visibility change (filtering on/off) nodes carry stale coordinates that
+      // wedge the tree into a poor, overly tall shape that re-running Tree can't
+      // escape — only switching to Force and back fixed it. Normalize with an
+      // instant grid pre-pass so the tree is deterministic every time.
+      if (name === "breadthfirst") {
+        (vis.length ? vis : cy.nodes())
+          .layout({ name: "grid", animate: false })
+          .run();
+      }
       var opts = Object.assign({}, LAYOUTS[name], { eles: lo });
+      if (!animate) opts.animate = false; // instant on filter-driven re-runs
       if (name === "breadthfirst") {
         const roots = pickRoots().filter(":visible");
         if (roots.length) opts.roots = roots;
       }
       cy.layout(opts).run();
     }
-    // Re-frame the viewport to the visible nodes WITHOUT re-running the layout, so
-    // filtering tightens the view but never reshuffles positions (keeps the mental map).
-    function fitVisible() {
-      var vis = cy.nodes(":visible");
-      if (!vis.length) return;
-      cy.animate(
-        { fit: { eles: vis, padding: 55 } },
-        { duration: 400, easing: "ease-out-cubic" },
-      );
-    }
-
     /* ════════════════════════════════════════════
      SELECTION + DETAIL PANEL
   ════════════════════════════════════════════ */
@@ -907,6 +910,7 @@ cytoscape.use(fcose);
       return true;
     }
     function applyFilters() {
+      var passing = new Set();
       cy.batch(() => {
         cy.nodes().forEach((n) => {
           var okType = !hiddenTypes[n.data("type")];
@@ -919,17 +923,52 @@ cytoscape.use(fcose);
             !selectedFirmware.has(n.data("sw_version")) ||
             n.data("sw_version") === "—";
           var tempVis = tempVisibleNode && n.id() === tempVisibleNode.id();
-          n.style(
-            "display",
-            (okType && okLoc && okPlat && okFw) || tempVis ? "element" : "none",
-          );
+          var show = (okType && okLoc && okPlat && okFw) || tempVis;
+          if (show) passing.add(n.id());
+          n.style("display", show ? "element" : "none");
         });
       });
+      hideOrphans(passing);
       if (selectedId) {
         const s = cy.getElementById(selectedId);
         if (s.empty() || s.style("display") === "none") clearSel();
       }
       updateCounts();
+    }
+    // Hide nodes left with no path to a core root (e.g. an access switch whose only
+    // uplink was filtered out). They'd otherwise float free of the topology — drop
+    // them from the view entirely. `shown` is the authoritative set of node ids that
+    // passed the filters this pass (read-back of display lags a tick behind the
+    // batch). Skipped when no core is shown, and never hides a search-surfaced node.
+    function hideOrphans(shown) {
+      var roots = [];
+      shown.forEach((id) => {
+        if (cy.getElementById(id).data("type") === "core") roots.push(id);
+      });
+      if (!roots.length) return;
+      // BFS from the roots over edges whose BOTH endpoints are shown.
+      var reached = new Set(roots);
+      var stack = roots.slice();
+      while (stack.length) {
+        var id = stack.pop();
+        cy.getElementById(id)
+          .connectedEdges()
+          .forEach((e) => {
+            var s = e.source().id(),
+              t = e.target().id();
+            if (!shown.has(s) || !shown.has(t)) return;
+            var other = s === id ? t : s;
+            if (!reached.has(other)) {
+              reached.add(other);
+              stack.push(other);
+            }
+          });
+      }
+      shown.forEach((id) => {
+        if (reached.has(id)) return;
+        if (tempVisibleNode && id === tempVisibleNode.id()) return;
+        cy.getElementById(id).style("display", "none");
+      });
     }
     /* keep every multi-select dropdown cross-filtered to the values still
 		   reachable under the other active filters (category / platform / firmware) */
@@ -1278,7 +1317,9 @@ cytoscape.use(fcose);
           if (window._syncFwDrop) window._syncFwDrop();
           updateResetBtn();
           persist();
-          fitVisible();
+          // re-run the active layout so the graph re-packs around the
+          // nodes that remain visible after this filter change (no animation)
+          runLayout(curLayout, false);
         });
         item.addEventListener("click", (e) => {
           if (e.target !== cb) {
@@ -1608,7 +1649,7 @@ cytoscape.use(fcose);
       }
 
       function exportPNG() {
-        var bg = resolveColor("--bg-0") || "#060a10";
+        var bg = resolveColor("--bg-0") || "#101219"; /* wa gray-05 */
         var png = cy.png({
           output: "blob",
           bg: bg,

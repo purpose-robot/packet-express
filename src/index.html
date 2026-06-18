@@ -12,16 +12,132 @@
         <style>
             :root {
                 /* Web Awesome palette → app accent (indigo) + category colors */
-                --indigo-3: #9da9ff; /* wa indigo-70 */
-                --indigo-4: #808aff; /* wa indigo-60 */
-                --indigo-6: #6163f2; /* wa indigo-50 */
-                --indigo-7: #4945cb; /* wa indigo-40 */
-                --pink-4: #c84382; /* wa pink-50  → Core */
-                --violet-4: #9951db; /* wa purple-50 → Access */
-                --teal-4: #2fbedc; /* wa cyan-70  → WLC */
-                --green-4: #1fb56e; /* wa green-60 → Wireless */
-                --yellow-4: #fac22b; /* wa yellow-80 → VoIP */
-                --gray-5: #717584; /* wa gray-50  → Unknown */
+                /* ════════════════════════════════════════════
+                   Web Awesome — default color palette (provided)
+                   Full 10-hue × 11-tint scale; every design token
+                   below is derived from these and nothing else.
+                   ════════════════════════════════════════════ */
+                --wa-color-red-95: #fff0ef;
+                --wa-color-red-90: #ffdedc;
+                --wa-color-red-80: #ffb8b6;
+                --wa-color-red-70: #fd8f90;
+                --wa-color-red-60: #f3676c;
+                --wa-color-red-50: #dc3146;
+                --wa-color-red-40: #b30532;
+                --wa-color-red-30: #8a132c;
+                --wa-color-red-20: #631323;
+                --wa-color-red-10: #3e0913;
+                --wa-color-red-05: #2a040b;
+                --wa-color-orange-95: #fff0e6;
+                --wa-color-orange-90: #ffdfca;
+                --wa-color-orange-80: #ffbb94;
+                --wa-color-orange-70: #ff9266;
+                --wa-color-orange-60: #f46a45;
+                --wa-color-orange-50: #cd491c;
+                --wa-color-orange-40: #9f3501;
+                --wa-color-orange-30: #802700;
+                --wa-color-orange-20: #601b00;
+                --wa-color-orange-10: #3c0d00;
+                --wa-color-orange-05: #280600;
+                --wa-color-yellow-95: #fef3cd;
+                --wa-color-yellow-90: #ffe495;
+                --wa-color-yellow-80: #fac22b;
+                --wa-color-yellow-70: #ef9d00;
+                --wa-color-yellow-60: #da7e00;
+                --wa-color-yellow-50: #b45f04;
+                --wa-color-yellow-40: #8c4602;
+                --wa-color-yellow-30: #6f3601;
+                --wa-color-yellow-20: #532600;
+                --wa-color-yellow-10: #331600;
+                --wa-color-yellow-05: #220c00;
+                --wa-color-green-95: #e3f9e3;
+                --wa-color-green-90: #c2f2c1;
+                --wa-color-green-80: #93da98;
+                --wa-color-green-70: #5dc36f;
+                --wa-color-green-60: #00ac49;
+                --wa-color-green-50: #00883c;
+                --wa-color-green-40: #036730;
+                --wa-color-green-30: #0a5027;
+                --wa-color-green-20: #0a3a1d;
+                --wa-color-green-10: #052310;
+                --wa-color-green-05: #031608;
+                --wa-color-cyan-95: #e3f6fb;
+                --wa-color-cyan-90: #c5ecf7;
+                --wa-color-cyan-80: #7fd6ec;
+                --wa-color-cyan-70: #2fbedc;
+                --wa-color-cyan-60: #00a3c0;
+                --wa-color-cyan-50: #078098;
+                --wa-color-cyan-40: #026274;
+                --wa-color-cyan-30: #014c5b;
+                --wa-color-cyan-20: #003844;
+                --wa-color-cyan-10: #002129;
+                --wa-color-cyan-05: #00151b;
+                --wa-color-blue-95: #e8f3ff;
+                --wa-color-blue-90: #d1e8ff;
+                --wa-color-blue-80: #9fceff;
+                --wa-color-blue-70: #6eb3ff;
+                --wa-color-blue-60: #3e96ff;
+                --wa-color-blue-50: #0071ec;
+                --wa-color-blue-40: #0053c0;
+                --wa-color-blue-30: #003f9c;
+                --wa-color-blue-20: #002d77;
+                --wa-color-blue-10: #001a4e;
+                --wa-color-blue-05: #000f35;
+                --wa-color-indigo-95: #f0f2ff;
+                --wa-color-indigo-90: #dfe5ff;
+                --wa-color-indigo-80: #bcc7ff;
+                --wa-color-indigo-70: #9da9ff;
+                --wa-color-indigo-60: #808aff;
+                --wa-color-indigo-50: #6163f2;
+                --wa-color-indigo-40: #4945cb;
+                --wa-color-indigo-30: #3933a7;
+                --wa-color-indigo-20: #292381;
+                --wa-color-indigo-10: #181255;
+                --wa-color-indigo-05: #0d0a3a;
+                --wa-color-purple-95: #f7f0ff;
+                --wa-color-purple-90: #eedfff;
+                --wa-color-purple-80: #ddbdff;
+                --wa-color-purple-70: #ca99ff;
+                --wa-color-purple-60: #b678f5;
+                --wa-color-purple-50: #9951db;
+                --wa-color-purple-40: #7936b3;
+                --wa-color-purple-30: #612692;
+                --wa-color-purple-20: #491870;
+                --wa-color-purple-10: #2d0b48;
+                --wa-color-purple-05: #1e0532;
+                --wa-color-pink-95: #feeff9;
+                --wa-color-pink-90: #feddf0;
+                --wa-color-pink-80: #fcb5d8;
+                --wa-color-pink-70: #f78dbf;
+                --wa-color-pink-60: #e66ba3;
+                --wa-color-pink-50: #c84382;
+                --wa-color-pink-40: #9e2a6c;
+                --wa-color-pink-30: #7d1e58;
+                --wa-color-pink-20: #5e1342;
+                --wa-color-pink-10: #3c0828;
+                --wa-color-pink-05: #28041a;
+                --wa-color-gray-95: #f1f2f3;
+                --wa-color-gray-90: #e4e5e9;
+                --wa-color-gray-80: #c7c9d0;
+                --wa-color-gray-70: #abaeb9;
+                --wa-color-gray-60: #9194a2;
+                --wa-color-gray-50: #717584;
+                --wa-color-gray-40: #545868;
+                --wa-color-gray-30: #424554;
+                --wa-color-gray-20: #2f323f;
+                --wa-color-gray-10: #1b1d26;
+                --wa-color-gray-05: #101219;
+                /* semantic hue aliases → Web Awesome tints */
+                --indigo-3: var(--wa-color-indigo-70);
+                --indigo-4: var(--wa-color-indigo-60);
+                --indigo-6: var(--wa-color-indigo-50);
+                --indigo-7: var(--wa-color-indigo-40);
+                --pink-4: var(--wa-color-pink-50); /* → Core */
+                --violet-4: var(--wa-color-purple-50); /* → Access */
+                --teal-4: var(--wa-color-cyan-70); /* → WLC */
+                --green-4: var(--wa-color-green-60); /* → Wireless */
+                --yellow-4: var(--wa-color-yellow-80); /* → VoIP */
+                --gray-5: var(--wa-color-gray-50); /* → Unknown */
                 --size-3: 1rem;
                 --size-5: 1.5rem;
                 --size-7: 2rem;
@@ -34,28 +150,56 @@
                     DejaVu Sans Mono, monospace;
                 --ease-out-2: cubic-bezier(0, 0, 0.5, 1);
                 --ease-in-out-3: cubic-bezier(0.5, 0, 0.5, 1);
-                --bg-0: #101218;
-                --bg-1: #101218;
-                --bg-2: #2f323f;
-                --bg-3: #424554;
-                --line: #2f323f;
-                --line-soft: #1b1d26;
-                --txt-hi: #f1f2f3;
-                --txt-mid: #abaeb9;
-                --txt-dim: #717584;
+                --bg-0: var(--wa-color-gray-05);
+                --bg-1: var(--wa-color-gray-05);
+                --bg-2: var(--wa-color-gray-20);
+                --bg-3: var(--wa-color-gray-30);
+                --line: var(--wa-color-gray-20);
+                --line-soft: var(--wa-color-gray-10);
+                --txt-hi: var(--wa-color-gray-95);
+                --txt-mid: var(--wa-color-gray-70);
+                --txt-dim: var(--wa-color-gray-50);
                 --teal: var(--indigo-4);
                 --cyan: var(--indigo-4);
                 --ltteal: var(--indigo-3);
-                --glow: rgba(129, 140, 248, 0.16);
-                /* ── accent alpha ladder (indigo) ── */
-                --accent-fill: rgba(129, 140, 248, 0.18);
-                --accent-line: rgba(129, 140, 248, 0.35);
-                --accent-line-strong: rgba(129, 140, 248, 0.55);
-                /* ── warning / caution ladder (amber) ── */
-                --warn: #fbbf24;
-                --warn-line-strong: rgba(251, 191, 36, 0.55);
-                --warn-fill: rgba(251, 191, 36, 0.16);
-                --warn-fill-strong: rgba(251, 191, 36, 0.3);
+                --glow: color-mix(
+                    in srgb,
+                    var(--wa-color-indigo-60) 16%,
+                    transparent
+                );
+                /* ── accent alpha ladder (wa indigo-60) ── */
+                --accent-fill: color-mix(
+                    in srgb,
+                    var(--wa-color-indigo-60) 18%,
+                    transparent
+                );
+                --accent-line: color-mix(
+                    in srgb,
+                    var(--wa-color-indigo-60) 35%,
+                    transparent
+                );
+                --accent-line-strong: color-mix(
+                    in srgb,
+                    var(--wa-color-indigo-60) 55%,
+                    transparent
+                );
+                /* ── warning / caution ladder (wa yellow) ── */
+                --warn: var(--wa-color-yellow-80);
+                --warn-line-strong: color-mix(
+                    in srgb,
+                    var(--wa-color-yellow-80) 55%,
+                    transparent
+                );
+                --warn-fill: color-mix(
+                    in srgb,
+                    var(--wa-color-yellow-80) 16%,
+                    transparent
+                );
+                --warn-fill-strong: color-mix(
+                    in srgb,
+                    var(--wa-color-yellow-80) 30%,
+                    transparent
+                );
                 /* ── focus tokens ── */
                 --focus-ring: 0 0 0 3px var(--glow);
                 --focus-outline: 2px solid var(--teal);
@@ -83,24 +227,36 @@
                 --fs-lg: 14px;
                 --fs-xl: 18px;
                 /* theme-sensitive overrides */
-                --topbar-bg-top: #090a10;
-                --overlay-bg: rgba(16, 18, 25, 0.82);
-                --statusbar-bg: rgba(16, 18, 25, 0.78);
-                --detail-top: #1b1d26;
-                --scrollbar-thumb: #424554;
-                --scrollbar-thumb-hover: #545868;
-                --select-bg: #101218;
-                --select-drop-bg: #1b1d25;
-                --wa-control-bg: #101219;
-                --filter-bg: #1b1d25;
-                --card-hover: #14161d;
+                --topbar-bg-top: var(--wa-color-gray-05);
+                --overlay-bg: color-mix(
+                    in srgb,
+                    var(--wa-color-gray-05) 82%,
+                    transparent
+                );
+                --statusbar-bg: color-mix(
+                    in srgb,
+                    var(--wa-color-gray-05) 78%,
+                    transparent
+                );
+                --detail-top: var(--wa-color-gray-10);
+                --scrollbar-thumb: var(--wa-color-gray-30);
+                --scrollbar-thumb-hover: var(--wa-color-gray-40);
+                --select-bg: var(--wa-color-gray-05);
+                --select-drop-bg: var(--wa-color-gray-10);
+                --wa-control-bg: var(--wa-color-gray-05);
+                --filter-bg: var(--wa-color-gray-10);
+                --card-hover: color-mix(
+                    in srgb,
+                    var(--wa-color-gray-10) 35%,
+                    var(--wa-color-gray-05)
+                );
                 /* cytoscape theme vars */
-                --cy-edge: #545868;
-                --cy-node-border: #101219;
-                --cy-text-outline: #101219;
-                --cy-text-bg: #101219;
+                --cy-edge: var(--wa-color-gray-40);
+                --cy-node-border: var(--wa-color-gray-05);
+                --cy-text-outline: var(--wa-color-gray-05);
+                --cy-text-bg: var(--wa-color-gray-05);
                 --cy-text-bg-op: 0.75;
-                --cy-text-color: #e4e5e9;
+                --cy-text-color: var(--wa-color-gray-90);
                 /* faded node opacity */
                 --cy-faded-op: 0.07;
                 --mono: var(--font-mono); /* OP: monospace stack */
@@ -587,10 +743,10 @@
                 transform: translateX(16px);
                 background: var(--teal);
             }
-
             .seg {
                 display: grid;
-                grid-template-columns: 1fr 1fr;
+                grid-auto-flow: column;
+                grid-auto-columns: 1fr;
                 gap: var(--space-6);
                 margin-top: var(--space-4);
             }
@@ -1433,35 +1589,65 @@
             /* ── Light theme ──────────────────────────────────────── */
             [data-theme="light"] {
                 --bg-0: #ffffff;
-                --bg-1: #f1f2f3;
-                --bg-2: #e4e5e9;
-                --bg-3: #c7c9d0;
-                --line: #c7c9d0;
-                --line-soft: #e4e5e9;
-                --txt-hi: #1b1d26;
-                --txt-mid: #545868;
-                --txt-dim: #717584;
+                --bg-1: var(--wa-color-gray-95);
+                --bg-2: var(--wa-color-gray-90);
+                --bg-3: var(--wa-color-gray-80);
+                --line: var(--wa-color-gray-80);
+                --line-soft: var(--wa-color-gray-90);
+                --txt-hi: var(--wa-color-gray-10);
+                --txt-mid: var(--wa-color-gray-40);
+                --txt-dim: var(--wa-color-gray-50);
                 --teal: var(--indigo-7);
                 --ltteal: var(--indigo-6);
-                --glow: rgba(73, 69, 203, 0.18);
-                --topbar-bg-top: #f1f2f3;
+                --glow: color-mix(
+                    in srgb,
+                    var(--wa-color-indigo-40) 18%,
+                    transparent
+                );
+                --topbar-bg-top: var(--wa-color-gray-95);
                 --overlay-bg: rgba(255, 255, 255, 0.9);
                 --statusbar-bg: rgba(255, 255, 255, 0.9);
-                --detail-top: #f1f2f3;
-                --scrollbar-thumb: #c7c9d0;
-                --scrollbar-thumb-hover: #abaeb9;
+                --detail-top: var(--wa-color-gray-95);
+                --scrollbar-thumb: var(--wa-color-gray-80);
+                --scrollbar-thumb-hover: var(--wa-color-gray-70);
                 --select-bg: #ffffff;
                 --select-drop-bg: #ffffff;
                 --wa-control-bg: #ffffff;
-                --filter-bg: #dbe0e7;
-                --card-hover: #ccd2db;
-                --cy-edge: #abaeb9;
+                --filter-bg: color-mix(
+                    in srgb,
+                    var(--wa-color-gray-80) 40%,
+                    var(--wa-color-gray-95)
+                );
+                --card-hover: color-mix(
+                    in srgb,
+                    var(--wa-color-gray-80) 70%,
+                    var(--wa-color-gray-90)
+                );
+                --cy-edge: var(--wa-color-gray-50);
                 --cy-node-border: #ffffff;
                 --cy-text-outline: #ffffff;
                 --cy-text-bg: #ffffff;
                 --cy-text-bg-op: 0.92;
-                --cy-text-color: #1b1d26;
+                --cy-text-color: var(--wa-color-gray-10);
                 --cy-faded-op: 0.18;
+                /* warn ladder retuned for light bg: deep wa yellow-50 text/line,
+                   softer wa yellow-60 fills so the Reset button keeps AA contrast */
+                --warn: var(--wa-color-yellow-50);
+                --warn-line-strong: color-mix(
+                    in srgb,
+                    var(--wa-color-yellow-50) 40%,
+                    transparent
+                );
+                --warn-fill: color-mix(
+                    in srgb,
+                    var(--wa-color-yellow-60) 10%,
+                    transparent
+                );
+                --warn-fill-strong: color-mix(
+                    in srgb,
+                    var(--wa-color-yellow-60) 18%,
+                    transparent
+                );
             }
         </style>
     </head>
@@ -1677,13 +1863,13 @@
                             <div class="seg" id="layoutseg">
                                 <button
                                     type="button"
-                                    data-lay="fcose"
+                                    data-lay="breadthfirst"
                                     class="on"
                                 >
-                                    Force
-                                </button>
-                                <button type="button" data-lay="breadthfirst">
                                     Tree
+                                </button>
+                                <button type="button" data-lay="fcose">
+                                    Force
                                 </button>
                             </div>
                         </div>
@@ -1725,16 +1911,6 @@
                     </div>
                     <div id="edge-tooltip"></div>
                     <div id="statusbar">
-                        <span
-                            ><span class="st-k">LAYOUT</span>
-                            <b id="st-lay">Force</b></span
-                        >
-                        <span class="sdiv"></span>
-                        <span
-                            ><span class="st-k">LOCATION</span>
-                            <b id="st-loc">—</b></span
-                        >
-                        <span class="sdiv"></span>
                         <span
                             ><span class="st-k">NODE</span>
                             <b id="st-sel">None</b></span
